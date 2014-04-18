@@ -22,7 +22,7 @@ class must-have {
     logoutput => true,
   } ->
   package { 'oracle-java7-installer':
-    ensure => present,
+    ensure  => latest,
   } ->
   file { '/vagrant/elasticsearch':
     ensure => directory,
@@ -30,16 +30,16 @@ class must-have {
     group => 'vagrant',
   } ->
   class { 'elasticsearch':
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.0.deb',
     config => {
-      'cluster.name' => 'vagrant_elasticsearch',
-      'node.name' => $::ipaddress,
+      'cluster.name' => 'elasticsearch',
+      'node.name' => 'vagrant1',
       'index' => {
         'number_of_replicas' => '0',
         'number_of_shards' => '1',
       },
       'network' => {
-        'host' => '0.0.0.0',
+        'host' => '192.168.1.20',
       }
     }
   }
